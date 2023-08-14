@@ -1,7 +1,9 @@
 from django.shortcuts import render
 
 
-def catalog(request):
-    # функция принимает параметр request
-    # и с помощью специальной функции возвращает ответ
-    return render(request, 'index.html')
+def index(request):
+    return render(request, 'catalog/index.html')
+
+
+def views_contacts(request):
+    return render(request, 'catalog/contacts.html')
