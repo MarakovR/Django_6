@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
-from mailing.models import MailingSettings
+from mailing.models import MailingSettings, Logs
 
 
 class MailingSettingsListView(ListView):
@@ -43,4 +43,11 @@ class MailingSettingsDetailView(DetailView):
     model = MailingSettings
     extra_context = {
         'title': 'Подробная информация о рассылке'
+    }
+
+
+class LogsListView(ListView):
+    model = Logs
+    extra_context = {
+        'title': 'Логи рассылок'
     }

@@ -1,5 +1,7 @@
 from django.db import models
 
+from clients.models import Client
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -13,19 +15,6 @@ class Message(models.Model):
     class Meta:
         verbose_name = 'сообщение'
         verbose_name_plural = 'сообщения'
-
-
-class Client(models.Model):
-    name = models.CharField(max_length=50, verbose_name='ФИО')
-    commentary = models.TextField(verbose_name='комментарий')
-    email = models.EmailField(verbose_name='email', **NULLABLE)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'клиент'
-        verbose_name_plural = 'клиенты'
 
 
 class MailingSettings(models.Model):
