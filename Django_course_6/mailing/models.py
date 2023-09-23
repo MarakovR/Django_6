@@ -5,18 +5,6 @@ from clients.models import Client
 NULLABLE = {'blank': True, 'null': True}
 
 
-class Message(models.Model):
-    theme = models.CharField(max_length=100, verbose_name='тема письма')
-    text = models.TextField(verbose_name='текст')
-
-    def __str__(self):
-        return self.theme
-
-    class Meta:
-        verbose_name = 'сообщение'
-        verbose_name_plural = 'сообщения'
-
-
 class MailingSettings(models.Model):
     PERIOD_DAILY = 'daily'
     PERIOD_WEEKLY = 'weekly'
@@ -33,8 +21,8 @@ class MailingSettings(models.Model):
     STATUS_DONE = 'done'
 
     STATUSES = (
-        (STATUS_CREATED, 'Запущена'),
-        (STATUS_STARTED, 'Создана'),
+        (STATUS_CREATED, 'Создана'),
+        (STATUS_STARTED, 'Запущена'),
         (STATUS_DONE, 'Завершена'),
     )
 
@@ -44,7 +32,6 @@ class MailingSettings(models.Model):
                               verbose_name='периодичность рассылки')
     status = models.CharField(max_length=50, choices=STATUSES, default=STATUS_STARTED, verbose_name='статус рассылки')
     client = models.ManyToManyField(Client, verbose_name='клиенты рассылки')
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение', **NULLABLE)
 
     def __str__(self):
         return self.status
@@ -52,6 +39,27 @@ class MailingSettings(models.Model):
     class Meta:
         verbose_name = 'рассылка'
         verbose_name_plural = 'рассылки'
+
+
+class Message(models.Model):
+    TO_BE_SENT = 'Подготовлено'
+    SHIPPED = 'Отправлено'
+
+    STATUS_CHOICES = [
+        (TO_BE_SENT, "Подготовлено"),
+        (SHIPPED, "Отправлено"),
+    ]
+    theme = models.CharField(max_length=100, verbose_name='тема письма')
+    text = models.TextField(verbose_name='текст')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=TO_BE_SENT, verbose_name='статус отправки')
+    mailing = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='рассылка', **NULLABLE)
+
+    def __str__(self):
+        return self.theme
+
+    class Meta:
+        verbose_name = 'сообщение'
+        verbose_name_plural = 'сообщения'
 
 
 class Logs(models.Model):
@@ -63,11 +71,10 @@ class Logs(models.Model):
         (STATUS_FAILED, 'Ошибка отправки'),
     )
 
+    mailing = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='рассылка', **NULLABLE)
     data_time = models.DateTimeField(auto_now_add=True, verbose_name='дата и время рассылки')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент', **NULLABLE)
-    status = models.CharField(max_length=50, choices=STATUSES, verbose_name='статус отправки')
-    settings = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='настройка', **NULLABLE)
-    answer = models.TextField(verbose_name='ответ почтового сервера', **NULLABLE)
+    status = models.CharField(choices=STATUSES, verbose_name='статус попытки')
 
     def __str__(self):
         return self.status

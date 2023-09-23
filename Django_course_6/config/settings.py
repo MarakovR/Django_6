@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_crontab",
 
     'mailing',
     'clients',
@@ -126,3 +127,13 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_HOST = 'smtp.yandex.ru'  # сервер, откуда отправляется сообщение
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'marakofr76@yandex.ru'
+EMAIL_HOST_PASSWORD = 'urnjruxpeqdfewqi'
+EMAIL_USE_SSL = True
+
+CRONJOBS = [
+    ('*/1 * * * *', 'mailing.services.send_mail.send_mails', '>> ' + os.path.join(BASE_DIR, 'log/debug.log' + ' 2>&1 ')),
+]
