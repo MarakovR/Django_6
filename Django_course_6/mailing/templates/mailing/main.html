@@ -1,0 +1,21 @@
+{% extends 'mailing/base.html' %}
+
+
+{% block content %}
+
+    <div class="row">
+
+                <div class="col-md-4">
+                  <div class="card mb-4 box-shadow">
+                      <p class="text">Всего рассылок - {{count_mailing}}</p>
+                      <p class="text">Активных рассылок - {{mailing_activ}}</p>
+                      <p class="text">Клиентов - {{count_clients}}</p>
+
+
+                    </div>
+                  </div>
+                </div>
+
+    </div>
+
+{% endblock %}

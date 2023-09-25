@@ -30,15 +30,18 @@
               <ul class="list-unstyled">
 
                 {% if user.is_authenticated %}
+                <h6 class="text-white">__{{user.email}}__</h6>
+                <li><a href="{% url 'mailing:main' %}" class="text-white">Главная</a></li>
+                <li><a href="{% url 'mailing:list' %}" class="text-white">Рассылки</a></li>
+                <li><a href="{% url 'clients:list' %}" class="text-white">Клиенты</a></li>
+                <li><a href="{% url 'users:list' %}" class="text-white">Пользователи</a></li>
+                <li><a href="{% url 'mailing:logs' %}" class="text-white">Логи</a></li>
                 <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
                 {% else %}
                 <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
                 <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
                 {% endif %}
 
-                <li><a href="{% url 'mailing:list' %}" class="text-white">Рассылки</a></li>
-                <li><a href="{% url 'clients:list' %}" class="text-white">Клиенты</a></li>
-                <li><a href="{% url 'mailing:logs' %}" class="text-white">Логи</a></li>
               </ul>
             </div>
           </div>

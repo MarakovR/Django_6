@@ -26,8 +26,10 @@
                           {% endif %}</p>
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
+                          {% if object.users.email == user.email %}
                           <a href="{% url 'mailing:edit' object.pk %}" class="btn btn-sm btn-outline-secondary">Изменить</a>
                           <a href="{% url 'mailing:delete' object.pk %}" class="btn btn-sm btn-outline-secondary">Удалить</a>
+                            {% endif %}
                         </div>
                       </div>
                     </div>

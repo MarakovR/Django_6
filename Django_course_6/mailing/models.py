@@ -1,6 +1,7 @@
 from django.db import models
 
 from clients.models import Client
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -32,6 +33,7 @@ class MailingSettings(models.Model):
                               verbose_name='периодичность рассылки')
     status = models.CharField(max_length=50, choices=STATUSES, default=STATUS_STARTED, verbose_name='статус рассылки')
     client = models.ManyToManyField(Client, verbose_name='клиенты рассылки')
+    users = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='создатель рассылки', **NULLABLE)
 
     def __str__(self):
         return self.status

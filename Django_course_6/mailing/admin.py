@@ -4,7 +4,6 @@ from clients.models import Client
 from mailing.models import Message, MailingSettings
 
 
-
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('name', 'email',)
