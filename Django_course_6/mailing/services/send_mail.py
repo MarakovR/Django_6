@@ -21,6 +21,8 @@ def _send_email(message_settings, message_client, message):
     Logs.objects.create(
         status=Logs.STATUS_OK if result else Logs.STATUS_FAILED,
         mailing=message_settings,
+        data_time=message_settings.start_time,
+        clients=message_client,
     )
 
 
@@ -29,15 +31,15 @@ def send_mails():
     datetime_now = now.time()
     for mailing_setting in MailingSettings.objects.filter(status=MailingSettings.STATUS_STARTED):
 
-        message = mailing_setting.message_set.filter(status=Message.TO_BE_SENT).first()
+        message = mailing_setting.message
 
         if (datetime_now > mailing_setting.start_time) and (datetime_now < mailing_setting.end_time):
 
             for mailing_client in mailing_setting.client.all():
 
                 mailing_log = Logs.objects.filter(
-                    client=mailing_client,
-                    mailing=mailing_setting
+                    clients=mailing_client,
+                    mailing=mailing_setting,
                 )
 
                 if mailing_log.exists():
@@ -55,10 +57,3 @@ def send_mails():
 
                 else:
                     _send_email(mailing_setting, mailing_client, message)
-
-
-
-
-
-
-

@@ -18,6 +18,7 @@ class MailingSettingsListView(LoginRequiredMixin, ListView):
 class MailingSettingsCreateView(CreateView):
     model = MailingSettings
     fields = ['start_time', 'end_time', 'period', 'status', 'client', 'users']
+
     success_url = reverse_lazy('mailing:list')
     extra_context = {
         'title': 'Создание рассылки'

@@ -81,7 +81,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mailing', # Название БД
+        'NAME': 'mailing_list', # Название БД
         'USER': 'roman', # Пользователь для подключения
         'PASSWORD': '13243546', # Пароль для этого пользователя
     }
@@ -124,6 +124,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -136,7 +138,7 @@ EMAIL_HOST_PASSWORD = 'urnjruxpeqdfewqi'
 EMAIL_USE_SSL = True
 
 CRONJOBS = [
-    ('*/1 * * * *', 'mailing.services.send_mail.send_mails', '>> ' + os.path.join(BASE_DIR, 'log/debug.log' + ' 2>&1 ')),
+    ('*/1 * * * *', 'mailing.services.send_mail.send_mails'),
 ]
 
 

@@ -15,7 +15,7 @@ class ClientsCreateView(CreateView):
     fields = ['name', 'email', 'commentary', ]
     success_url = reverse_lazy('clients:list')
     extra_context = {
-        'title': 'Создание пользователя'
+        'title': 'Создание клиента рассылки'
     }
 
 

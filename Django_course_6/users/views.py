@@ -13,9 +13,9 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('mailing:main')
 
 
-class UsersListView(ListView):
+class UsersListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
-
+    permission_required = 'users.view_user'
     extra_context = {
         'title': 'Список пользователей'
     }

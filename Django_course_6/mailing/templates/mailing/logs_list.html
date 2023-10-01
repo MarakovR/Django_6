@@ -6,18 +6,16 @@
         {% for object in object_list %}
                 <div class="col-md-4">
                   <div class="card mb-4 box-shadow">
+                      <p class="card-text">Информация о рассылке<p>
                     <div class="card-body">
+
                       <p class="card-text">
-                          {% if object.time %}
-                            Время: {{ object.time }}
-                          {% endif %}</p>
-                      <p class="card-text">
-                          {% if object.client  %}
-                            Пользователь: {{ object.client }}
+                          {% if object.data_time %}
+                            Время: {{ object.data_time }}
                           {% endif %}</p>
                         <p class="card-text">
-                          {% if object.mailing_list %}
-                            Рассылка: {{ object.mailing_list }}
+                          {% if object.clients %}
+                            Клиенты: {{ object.clients }}
                           {% endif %}</p>
                       <p class="card-text">
                           {% if object.status %}

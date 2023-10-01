@@ -34,7 +34,9 @@
                 <li><a href="{% url 'mailing:main' %}" class="text-white">Главная</a></li>
                 <li><a href="{% url 'mailing:list' %}" class="text-white">Рассылки</a></li>
                 <li><a href="{% url 'clients:list' %}" class="text-white">Клиенты</a></li>
+                {% if perms.users.view_user %}
                 <li><a href="{% url 'users:list' %}" class="text-white">Пользователи</a></li>
+                {% endif %}
                 <li><a href="{% url 'mailing:logs' %}" class="text-white">Логи</a></li>
                 <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
                 {% else %}
